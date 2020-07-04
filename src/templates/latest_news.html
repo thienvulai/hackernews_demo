@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- add icon link -->
+    <link rel="icon" href="{{ url_for('static', filename='../static/images/y18.gif') }}" type="image/x-icon">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='../static/style.css') }}">
+
+    <title>Hacker News</title>
+    <style>
+        body {
+    font-size: 10pt;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.menu_top {
+    background-color: #F56526;
+    height: 28px;
+
+}
+.menu_top a, .link_bottom a {
+    color: black;
+    text-decoration: none;
+}
+
+.link_bottom{
+    background-color: #F6F6EF;
+    border-top: solid red 2px;
+    text-align: center;
+}
+
+
+.underline_link a:hover{
+    text-decoration: underline;
+}
+
+.underline_link a{
+    color: #A78C86;
+}
+
+.normal_link a:link{
+    color: black;
+    text-decoration: none;
+}
+
+.normal_link a:hover{
+    text-decoration: none;
+    color: black;
+}
+
+.normal_link a:active{
+    text-decoration: none;
+    color: black;
+}
+
+
+.normal_link a:visited{
+    color: #A78C86;
+    text-decoration: none;
+}
+
+.img_logo {
+    border: solid white 1px;
+}
+
+.search_btn {
+    color: #8EB1CD;
+}
+
+.detail_news {
+    font-size: 8pt;
+    color: #A3A3A1;
+}
+
+.table_detail {
+    background-color: #F6F6EF;
+}
+    </style>
+</head>
+
+<body>
+    <!-- <h1 style="visibility: hidden;">Hacker Rank News</h1> -->
+    <div class="container p-0 mt-1">
+        <div class="row p-0 p-1 menu_top">
+            <div class="col-12 p-0 m-0">
+                <img src="{{ url_for('static', filename='../static/images/y18.gif') }}" alt="" class="img_logo">
+                <strong>
+                    <a href="">Hacker News</a>&nbsp;
+                </strong>
+                <a href="">new</a> |
+                <a href="">past</a> |
+                <a href="">comments</a> |
+                <a href="">ask</a> |
+                <a href="">show</a> |
+                <a href="">jobs</a> |
+                <a href="">submit</a>
+            </div>
+        </div>
+        <div class="row table_detail">
+            <div class="col-12">
+                <p>
+                <table>
+                    {% for item in list_item %}
+                    <tr class="tr_header">
+                        <td class="rank">
+                            {% if item['rank']%}
+                            {{ item['rank'] }}.
+                            {% endif %}
+                        </td>
+                        <td class="vote">
+                            {% if item['link_vote']%}
+                                <a href="{{ item['link_vote'] }}">v</a>
+                            {% endif %}
+                        </td>
+                        <td class="title_site">
+                            <span class="normal_link">
+                                {% if item['title']%}
+                                <a href="{{ item['link'] }}">
+                                    {{ item['title'] }}
+                                </a>
+                                {% endif %}
+                            </span>
+                           <span class="underline_link">
+                                <a href="{{ item['site'] }}">
+                                    {% if item['domain']%}
+                                        ({{ item['domain'] }})
+                                    {% endif %}
+                                </a></span>
+                        </td>
+                    </tr>
+                    <tr class="tr_detail">
+                        <td class="space1">&nbsp;</td>
+                        <td class="space2">&nbsp;</td>
+                        <td class="detail_news">
+                            <span class="td_point">
+                                {% if item['point']%}
+                                    {{ item['point'] }}
+                                {% endif %}
+                            </span>points by
+                            <span class="underline_link">
+                                    {% if item['user']%}
+                                    <a class="td_user" href="{{ item['link_user'] }}">
+                                        {{ item['user'] }}
+                                    </a>
+                                    {% endif %}
+                                </span>
+                            <span class="underline_link">
+                                    {% if item['date_created'] %}
+                                    <a class="td_time" href="{{ item['link_item'] }}">
+                                        {{ item['date_created'] }} hours ago
+                                    </a>
+                                    {% endif %}
+                                </span>
+                            <span class="underline_link">
+                                {% if item['hide'] %}
+                                <a class="td_hide" href="{{ item['link_hide'] }}">| hide</a>
+                                {% endif %}
+                            </span>
+                            <span class="underline_link">
+                                {% if item['comment'] %}
+                                    {% if item['comment'] == 'discuss' %}
+                                        <a class="td_comment" href="{{ item['link_item'] }}">
+                                            | {{ item['comment'] }}
+                                        </a>
+                                    {% else%}
+                                        <a class="td_comment" href="{{ item['link_item'] }}">
+                                            | {{ item['comment'] }} comments
+                                        </a>
+                                    {% endif %}
+                                {% endif %}
+                                </span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+
+                </p>
+
+                More
+            </div>
+        </div>
+
+        <div class="row pt-1 link_bottom">
+            <div class="col-12">
+                <p>
+                    <a href="">Guidelines</a> |
+                    <a href="">FAQ</a> |
+                    <a href="">Support</a> |
+                    <a href="">API</a> |
+                    <a href="">Security</a> |
+                    <a href="">Lists</a> |
+                    <a href="">Bookmarklet</a> |
+                    <a href="">Legal</a> |
+                    <a href="">Apply to YC</a> |
+                    <a href="">Contact</a>
+                </p>
+                <p class="search_btn">
+                    Search
+                    <input type="text">
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
